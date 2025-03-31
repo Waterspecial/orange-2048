@@ -27,7 +27,7 @@ const Tile = ({ value }: TileProps) => {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.2 }}
-      className={`h-16 w-16 flex items-center justify-center text-white font-bold text-2xl rounded-md ${getTileColor(
+      className={`h-16 w-16 md:w-[100px] md:h-[100px] flex items-center justify-center text-white font-bold text-2xl rounded-md ${getTileColor(
         value
       )}`}
     >
