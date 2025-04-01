@@ -26,7 +26,7 @@ const Tile = ({ value }: TileProps) => {
       1024: "bg-blue-500",
       2048: "bg-purple-500",
     };
-    return colors[num] || "bg-gray-700";
+    return colors[num] || "bg-[#364153]";
   };
 
   return isMounted ? (
