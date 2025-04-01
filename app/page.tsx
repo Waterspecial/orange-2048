@@ -25,6 +25,14 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [move]);
 
+  const shareOnX = () => {
+    const tweetText = `🔥 I just crushed 2048 (built by @Waterspecial) with a mind-blowing score of ${score}! Can you beat me? 😏🔥 Try this @sign themed game now: https://orange-2048.vercel.app/`;
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      tweetText
+    )}`;
+    window.open(tweetUrl, "_blank");
+  };
+
   return (
     <>
       <div className="w-screen h-screen">
@@ -37,7 +45,7 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center w-full mt-10">
-          <div className="flex items-end justify-between rounded-lg text-white w-[456px] mb-4 font-semibold text-lg">
+          <div className="flex items-end justify-between rounded-lg text-white w-full md:w-[456px] mb-4 font-semibold text-lg p-4">
             <p className="bg-white font-medium text-[14px] leading-5 text-[#282A3A] p-2 rounded-md shadow-lg">
               BEST:{" "}
               <span className="text-orange-500 text-[16px] leading-6 font-semibold ml-[2px]">
@@ -68,12 +76,20 @@ export default function Home() {
               <p className="text-white text-[14px] font-bold my-2">
                 Game Over!
               </p>
-              <button
-                onClick={restartGame}
-                className="bg-red-500 text-white px-4 py-2 rounded-md text-[12px] font-semibold hover:bg-red-600 cursor-pointer"
-              >
-                Restart Game
-              </button>
+              <div className="flex justify-center gap-4 items-center">
+                <button
+                  onClick={restartGame}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md text-[12px] font-semibold hover:bg-red-600 cursor-pointer"
+                >
+                  Restart Game
+                </button>
+                <button
+                  onClick={shareOnX}
+                  className="mt-2 bg-[#282A3A] text-white px-3 py-2 text-[14px] rounded-md text-lg font-semibold cursor-pointer"
+                >
+                  Share on X!
+                </button>
+              </div>
             </motion.div>
           )}
           {gameWon && (
@@ -89,25 +105,36 @@ export default function Home() {
               className="text-green-500 font-bold mt-3 flex flex-col items-center justify-center text-[14px] "
             >
               <p>🎉 Incredible! You Conquered 2048! 🚀</p>
-              <button
-                onClick={restartGame}
-                className="mt-2 bg-green-500 text-white px-3 py-2 text-[14px]  rounded-md text-lg font-semibold hover:bg-green-600 cursor-pointer"
-              >
-                Play Again
-              </button>
+              <div className="flex justify-center gap-4 items-center">
+                <button
+                  onClick={restartGame}
+                  className="mt-2 bg-green-500 text-white px-3 py-2 text-[14px]  rounded-md text-lg font-semibold hover:bg-green-600 cursor-pointer"
+                >
+                  Play Again
+                </button>
+                <button
+                  onClick={shareOnX}
+                  className="mt-2 bg-[#282A3A] text-white px-3 py-2 text-[14px] rounded-md text-lg font-semibold cursor-pointer"
+                >
+                  Share on X!
+                </button>
+              </div>
             </motion.div>
           )}
         </div>
         <footer className="absolute bottom-4 right-4 text-white">
           <p className="text-sm font-semibold">
             From {""}
-            <a className="underline text-orange-500" href="https://x.com/Waterspecial1" target="_blank">
+            <a
+              className="underline text-orange-500"
+              href="https://x.com/Waterspecial1"
+              target="_blank"
+            >
               Water {""}
             </a>
             with ❤️
           </p>
         </footer>
-        
       </div>
       {rules && <RulesModal closeModal={() => setRules(false)} />}
     </>

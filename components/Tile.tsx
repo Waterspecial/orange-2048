@@ -1,10 +1,17 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 type TileProps = {
   value: number;
 };
 
 const Tile = ({ value }: TileProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const getTileColor = (num: number) => {
     const colors: { [key: number]: string } = {
       2: "bg-yellow-200",
@@ -22,7 +29,7 @@ const Tile = ({ value }: TileProps) => {
     return colors[num] || "bg-gray-700";
   };
 
-  return (
+  return isMounted ? (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
@@ -33,7 +40,7 @@ const Tile = ({ value }: TileProps) => {
     >
       {value !== 0 ? value : ""}
     </motion.div>
-  );
+  ) : null; // Prevent hydration issues
 };
 
 export default Tile;
