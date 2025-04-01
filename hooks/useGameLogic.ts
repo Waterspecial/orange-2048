@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   shiftLeft,
   shiftRight,
@@ -19,17 +19,20 @@ const useGameLogic = () => {
     newBoard = addNewTile(newBoard); // Add second tile
     return newBoard;
   };
-
   const [board, setBoard] = useState<number[][]>(initializeBoard());
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(() => {
-    if (typeof window !== "undefined") {
-      return Number(localStorage.getItem("highScore")) || 0;
-    }
-    return 0;
-  });
+  const [highScore, setHighScore] = useState(0); 
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
+
+  // Fetch high score only on the client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedHighScore = Number(localStorage.getItem("highScore")) || 0;
+      setHighScore(storedHighScore);
+    }
+  }, []);
+
 
   const move = (direction: string) => {
     let newBoard: number[][] = [];

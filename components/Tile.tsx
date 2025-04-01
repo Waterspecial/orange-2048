@@ -14,17 +14,17 @@ const Tile = ({ value }: TileProps) => {
 
   const getTileColor = (num: number) => {
     const colors: { [key: number]: string } = {
-      2: "bg-yellow-200",
-      4: "bg-yellow-300",
-      8: "bg-yellow-400",
-      16: "bg-orange-400",
-      32: "bg-orange-500",
-      64: "bg-red-500",
-      128: "bg-green-400",
-      256: "bg-green-500",
-      512: "bg-blue-400",
-      1024: "bg-blue-500",
-      2048: "bg-purple-500",
+      2: "bg-[#B5AC5D]",
+      4: "bg-[#FFE020]",
+      8: "bg-[#EAB900]",
+      16: "bg-[#FF8905]",
+      32: "bg-[#B64B01]",
+      64: "bg-[#FA2C37]",
+      128: "bg-[#06DF73]",
+      256: "bg-[#0A8346]",
+      512: "bg-[#50A2FF]",
+      1024: "bg-[#0B60C1]",
+      2048: "bg-[#AD47FF]",
     };
     return colors[num] || "bg-[#364153]";
   };

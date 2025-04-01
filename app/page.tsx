@@ -11,7 +11,45 @@ export default function Home() {
   const { board, score, gameOver, gameWon, move, restartGame, highScore } =
     useGameLogic();
 
+  const shareOnX = () => {
+    const tweetText = `🔥 I just crushed 2048 (built by @Waterspecial) with a mind-blowing score of ${score}! Can you beat me? 😏🔥 Try this @sign themed game now: https://orange-2048.vercel.app/`;
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      tweetText
+    )}`;
+    window.open(tweetUrl, "_blank");
+  };
+
+  // Track touch start position
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const handleTouchStart = (event: TouchEvent) => {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+  };
+
+  // Handle touch end event
+  const handleTouchEnd = (event: TouchEvent) => {
+    const touchEndX = event.changedTouches[0].clientX;
+    const touchEndY = event.changedTouches[0].clientY;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Determine the swipe direction
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      // Horizontal Swipe
+      if (deltaX > 50) move("ArrowRight");
+      else if (deltaX < -50) move("ArrowLeft");
+    } else {
+      // Vertical Swipe
+      if (deltaY > 50) move("ArrowDown");
+      else if (deltaY < -50) move("ArrowUp");
+    }
+  };
+
   useEffect(() => {
+    // Listen for keyboard input
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
         ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)
@@ -22,16 +60,15 @@ export default function Home() {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [move]);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchend", handleTouchEnd);
 
-  const shareOnX = () => {
-    const tweetText = `🔥 I just crushed 2048 (built by @Waterspecial) with a mind-blowing score of ${score}! Can you beat me? 😏🔥 Try this @sign themed game now: https://orange-2048.vercel.app/`;
-    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      tweetText
-    )}`;
-    window.open(tweetUrl, "_blank");
-  };
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [move]);
 
   return (
     <>
