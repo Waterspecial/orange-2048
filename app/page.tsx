@@ -107,6 +107,7 @@ export default function Home() {
             with ❤️
           </p>
         </footer>
+        
       </div>
       {rules && <RulesModal closeModal={() => setRules(false)} />}
     </>
