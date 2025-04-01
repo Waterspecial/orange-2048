@@ -25,6 +25,14 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [move]);
 
+  const shareOnX = () => {
+    const tweetText = `🔥 I just crushed 2048 (built by @Waterspecial) with a mind-blowing score of ${score}! Can you beat me? 😏🔥 Try this @sign themed game now: https://sign-ruddy.vercel.app/`;
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      tweetText
+    )}`;
+    window.open(tweetUrl, "_blank");
+  };
+
   return (
     <>
       <div className="w-screen h-screen">
@@ -76,7 +84,7 @@ export default function Home() {
               </button>
             </motion.div>
           )}
-          {gameWon && (
+          {!gameWon && (
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1.2, opacity: 1 }}
@@ -89,25 +97,36 @@ export default function Home() {
               className="text-green-500 font-bold mt-3 flex flex-col items-center justify-center text-[14px] "
             >
               <p>🎉 Incredible! You Conquered 2048! 🚀</p>
-              <button
-                onClick={restartGame}
-                className="mt-2 bg-green-500 text-white px-3 py-2 text-[14px]  rounded-md text-lg font-semibold hover:bg-green-600 cursor-pointer"
-              >
-                Play Again
-              </button>
+              <div className="flex justify-center gap-4 items-center">
+                <button
+                  onClick={restartGame}
+                  className="mt-2 bg-green-500 text-white px-3 py-2 text-[14px]  rounded-md text-lg font-semibold hover:bg-green-600 cursor-pointer"
+                >
+                  Play Again
+                </button>
+                <button
+                  onClick={shareOnX}
+                  className="mt-2 bg-[#282A3A] text-white px-3 py-2 text-[14px] rounded-md text-lg font-semibold cursor-pointer"
+                >
+                  Share on X!
+                </button>
+              </div>
             </motion.div>
           )}
         </div>
         <footer className="absolute bottom-4 right-4 text-white">
           <p className="text-sm font-semibold">
             From {""}
-            <a className="underline text-orange-500" href="https://x.com/Waterspecial1" target="_blank">
+            <a
+              className="underline text-orange-500"
+              href="https://x.com/Waterspecial1"
+              target="_blank"
+            >
               Water {""}
             </a>
             with ❤️
           </p>
         </footer>
-        
       </div>
       {rules && <RulesModal closeModal={() => setRules(false)} />}
     </>
