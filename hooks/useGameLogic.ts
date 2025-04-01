@@ -23,7 +23,10 @@ const useGameLogic = () => {
   const [board, setBoard] = useState<number[][]>(initializeBoard());
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() => {
-    return Number(localStorage.getItem("highScore")) || 0;
+    if (typeof window !== "undefined") {
+      return Number(localStorage.getItem("highScore")) || 0;
+    }
+    return 0;
   });
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
