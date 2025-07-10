@@ -9,8 +9,9 @@ import RulesModal from "@/components/RulesModal";
 export default function Home() {
   const [rules, setRules] = useState(false);
   const { board, score, gameOver, gameWon, move, restartGame, highScore } =
-    useGameLogic();
+    useGameLogic()
 
+    // for share on X (formerly Twitter)
   const shareOnX = () => {
     const tweetText = `🔥 I just crushed 2048 (built by @Waterspecial) with a mind-blowing score of ${score}! Can you beat me? 😏🔥 Try this @sign themed game now: https://orange-2048.vercel.app/`;
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
